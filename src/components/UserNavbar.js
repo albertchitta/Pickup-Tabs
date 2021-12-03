@@ -14,6 +14,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import { signOutUser } from '../api/auth';
 
 const settings = ['Logout'];
 
@@ -24,6 +25,7 @@ const ResponsiveAppBar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -39,7 +41,7 @@ const ResponsiveAppBar = () => {
   return (
     <>
       <AppBar position="static" style={{ backgroundColor: '#bd8633' }}>
-        <Container maxWidth="xl">
+        <Container maxWidth="l">
           <Toolbar disableGutters>
             <Typography
               variant="h5"
@@ -215,7 +217,9 @@ const ResponsiveAppBar = () => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography textAlign="center" onClick={signOutUser}>
+                      {setting}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>

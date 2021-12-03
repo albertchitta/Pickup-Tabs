@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 
 // const Search = styled('div')(({ theme }) => ({
 //   position: 'relative',
@@ -81,19 +81,21 @@ const StyledSearch = styled('div')(({ theme }) => ({
 
 export default function SearchBar() {
   return (
-    <Toolbar>
-      <StyledSearch>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Enter artist name or song title"
-          inputProps={{ 'aria-label': 'search' }}
-        />
-      </StyledSearch>
-      <StyledButton>
-        <Button variant="outlined">Search</Button>
-      </StyledButton>
-    </Toolbar>
+    <Container maxWidth="xl">
+      <Toolbar>
+        <StyledSearch>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Enter artist name or song title"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </StyledSearch>
+        <StyledButton>
+          <Button variant="outlined">Search</Button>
+        </StyledButton>
+      </Toolbar>
+    </Container>
   );
 }
