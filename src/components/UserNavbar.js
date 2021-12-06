@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar';
 import { signOutUser } from '../api/auth';
 
 const settings = ['Logout'];
@@ -227,7 +226,6 @@ const ResponsiveAppBar = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <SearchBar sx={{ marginLeft: '100px' }} />
     </>
   );
 };

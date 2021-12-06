@@ -1,7 +1,9 @@
 import axios from 'axios';
+import firebase from 'firebase/app';
 import firebaseConfig from '../apiKeys';
 
 const dbUrl = firebaseConfig.databaseURL;
+const getCurrentUsersUid = () => firebase.auth().currentUser?.uid;
 
 const getTrackers = (uid) => new Promise((resolve, reject) => {
   axios
@@ -52,5 +54,10 @@ const deleteTracker = (tracker) => new Promise((resolve, reject) => {
 });
 
 export {
-  getTrackers, getTracker, createTracker, updateTracker, deleteTracker,
+  getCurrentUsersUid,
+  getTrackers,
+  getTracker,
+  createTracker,
+  updateTracker,
+  deleteTracker,
 };
