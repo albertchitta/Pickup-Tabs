@@ -1,58 +1,31 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Button, Container, FormGroup } from '@mui/material';
+import { Form, Input } from 'reactstrap';
 import { styled, alpha } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import { Button, Container } from '@mui/material';
+// import Toolbar from '@mui/material/Toolbar';
+// import InputBase from '@mui/material/InputBase';
+import Home from '../views/Home';
 
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: 'inherit',
+//   '& .MuiInputBase-input': {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: '10px',
+//     width: '100%',
+//     [theme.breakpoints.up('sm')]: {
+//       width: '40ch',
+//     },
 //   },
-//   // marginLeft: 0,
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(1),
-//     width: 'auto',
+//   '@media (max-width: 768px)': {
+//     width: '100%',
+//     input: {
+//       '&::placeholder': {
+//         fontSize: '14px',
+//       },
+//     },
 //   },
-//   border: '1px solid black',
 // }));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '30ch',
-      '&:focus': {
-        width: '40ch',
-      },
-    },
-  },
-  '@media (max-width: 768px)': {
-    input: {
-      '&::placeholder': {
-        fontSize: '14px',
-      },
-    },
-  },
-}));
 
 const StyledButton = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -68,34 +41,77 @@ const StyledButton = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledSearch = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  border: '1px solid black',
-  marginLeft: 'auto',
-  '@media (max-width: 768px)': {
-    width: '100%',
-    marginRight: '5px',
-  },
-}));
+// const StyledSearch = styled('div')(({ theme }) => ({
+//   position: 'relative',
+//   borderRadius: theme.shape.borderRadius,
+//   border: '1px solid black',
+//   marginLeft: 'auto',
+//   '@media (max-width: 768px)': {
+//     width: '100%',
+//     marginRight: '5px',
+//   },
+// }));
+
+const initialState = {
+  tab: '',
+};
 
 export default function SearchBar() {
+  const [input, setInput] = useState(initialState);
+
+  const handleChange = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+      <Home input={input} />;
+  };
+
   return (
     <Container maxWidth="xl">
-      <Toolbar>
+      {/* <Toolbar>
         <StyledSearch>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
           <StyledInputBase
             placeholder="Enter artist name or song title"
             inputProps={{ 'aria-label': 'search' }}
+            type="text"
+            name="tab"
+            id="tab"
+            value={input.tab || ''}
+            onChange={handleChange}
+            required
           />
         </StyledSearch>
         <StyledButton>
-          <Button variant="outlined">Search</Button>
+          <Button variant="outlined" onClick={handleClick()}>
+            Search
+          </Button>
         </StyledButton>
-      </Toolbar>
+      </Toolbar> */}
+      <>
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <Input
+              type="text"
+              name="tab"
+              id="tab"
+              placeholder="Enter artist name or song title"
+              value={input.tab || ''}
+              onChange={handleChange}
+              required
+            />
+          </FormGroup>
+          <StyledButton>
+            <Button variant="outlined" type="submit">
+              Search
+            </Button>
+          </StyledButton>
+        </Form>
+      </>
     </Container>
   );
 }

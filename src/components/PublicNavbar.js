@@ -7,8 +7,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-// import PropTypes from 'prop-types';
-import SearchBar from './SearchBar';
 import { signInUser } from '../api/auth';
 
 const StyledButton = styled('div')(({ theme }) => ({
@@ -18,7 +16,9 @@ const StyledButton = styled('div')(({ theme }) => ({
   borderColor: 'black',
   '&:hover': {
     backgroundColor: '#a99d9d',
+    border: '1px solid black',
   },
+  padding: '0 8px',
   marginLeft: 0,
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
@@ -66,7 +66,7 @@ const ResponsiveAppBar = () => (
           <Box sx={{ flexGrow: 0 }}>
             <StyledButton>
               <Button
-                variant="outlined"
+                variant="text"
                 sx={{ color: 'white', borderColor: 'black' }}
                 onClick={signInUser}
               >
@@ -77,15 +77,6 @@ const ResponsiveAppBar = () => (
         </Toolbar>
       </Container>
     </AppBar>
-    <SearchBar sx={{ marginLeft: '100px' }} />
   </>
 );
 export default ResponsiveAppBar;
-
-// ResponsiveAppBar.propTypes = {
-//   user: PropTypes.node,
-// };
-
-// ResponsiveAppBar.defaultProps = {
-//   user: null,
-// };
