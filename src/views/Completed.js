@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getCurrentUsersUid, getTrackers } from '../api/data/trackerData';
-import Tracker from '../components/Tracker';
+import CompleteTracker from '../components/CompleteTracker';
 
 const StyledComplete = styled.div``;
 
@@ -28,7 +28,7 @@ export default function Completed() {
           trackers.map((tracker) => {
             if (tracker.status === 'Completed') {
               return (
-                <Tracker
+                <CompleteTracker
                   key={tracker.firebaseKey}
                   tracker={tracker}
                   setTrackers={setTrackers}

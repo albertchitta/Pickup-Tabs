@@ -32,9 +32,9 @@ export default function Tab({ tab }) {
     title: tab.title,
     artist: tab.artist,
     // status: tab.status,
-    rating: tab.rating,
-    difficulty: tab.difficulty,
-    note: tab.note,
+    // rating: tab.rating,
+    // difficulty: tab.difficulty,
+    // note: tab.note,
   };
 
   const [show, setShow] = useState(false);
@@ -238,6 +238,13 @@ Tab.propTypes = {
     note: PropTypes.string,
     artist: PropTypes.shape({
       name: PropTypes.string,
+    }),
+    progress: PropTypes.shape({
+      intro: PropTypes.bool,
+      riffs: PropTypes.bool,
+      verses: PropTypes.bool,
+      choruses: PropTypes.bool,
+      outro: PropTypes.bool,
     }),
   }).isRequired,
 };
