@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-alert */
@@ -21,7 +20,14 @@ const steps = ['Intro', 'Riffs', 'Verses', 'Choruses', 'Solos', 'Outro'];
 
 export default function Tracker({ tracker, setTrackers }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState({});
+  const [completed, setCompleted] = useState({
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+  });
   const [show, setShow] = useState(false);
   const [formInput, setFormInput] = useState(tracker);
   const history = useHistory();
@@ -32,7 +38,7 @@ export default function Tracker({ tracker, setTrackers }) {
   const totalSteps = () => steps.length;
   const completedSteps = () => Object.keys(completed).length;
   const isLastStep = () => activeStep === totalSteps() - 1;
-  const allStepsCompleted = () => completedSteps() === totalSteps();
+  const allStepsCompleted = () => true;
 
   // It's the last step, but not all steps have been completed,
   // find the first step that has been completed
@@ -54,11 +60,10 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
-    // tracker.progress[steps[activeStep].toLowerCase()] = true;
-    // updateTracker(tracker).then(setTrackers);
     setCompleted(newCompleted);
     handleNext();
     if (completedSteps() === totalSteps()) {
+      // eslint-disable-next-line no-param-reassign
       tracker.status = 'Completed';
       updateTracker(tracker).then(setTrackers);
     }
@@ -67,12 +72,16 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
+    // eslint-disable-next-line no-param-reassign
+    tracker.status = 'Learning';
+    updateTracker(tracker).then(setTrackers);
   };
 
   const resetStep = () => {
     const newCompleted = completed;
     delete newCompleted[activeStep];
     setCompleted(newCompleted);
+    console.warn(completed);
     handleNext();
   };
 
@@ -293,14 +302,6 @@ Tracker.propTypes = {
     note: PropTypes.string,
     artist: PropTypes.shape({
       name: PropTypes.string,
-    }),
-    progress: PropTypes.shape({
-      intro: PropTypes.bool,
-      riffs: PropTypes.bool,
-      verses: PropTypes.bool,
-      choruses: PropTypes.bool,
-      solos: PropTypes.bool,
-      outro: PropTypes.bool,
     }),
   }).isRequired,
   setTrackers: PropTypes.func.isRequired,
