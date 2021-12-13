@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-alert */
@@ -14,7 +15,11 @@ import { Modal } from 'react-bootstrap';
 import {
   Form, FormGroup, Input, Label, Button,
 } from 'reactstrap';
-import { deleteTracker, updateTracker } from '../api/data/trackerData';
+import {
+  deleteTracker,
+  getCurrentUsersUid,
+  updateTracker,
+} from '../api/data/trackerData';
 
 const steps = ['Intro', 'Riffs', 'Verses', 'Choruses', 'Solos', 'Outro'];
 
@@ -35,54 +40,19 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const totalSteps = () => steps.length;
-  const completedSteps = () => Object.keys(completed).length;
-  const isLastStep = () => activeStep === totalSteps() - 1;
   const allStepsCompleted = () => true;
-
-  // It's the last step, but not all steps have been completed,
-  // find the first step that has been completed
-  const handleNext = () => {
-    const newActiveStep = isLastStep() && !allStepsCompleted()
-      ? steps.findIndex((step, i) => !(i in completed))
-      : activeStep + 1;
-    setActiveStep(newActiveStep);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-    if (completedSteps() === totalSteps()) {
-      // eslint-disable-next-line no-param-reassign
-      tracker.status = 'Completed';
-      updateTracker(tracker).then(setTrackers);
-    }
-  };
 
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
-    // eslint-disable-next-line no-param-reassign
+    delete tracker.progress;
     tracker.status = 'Learning';
-    updateTracker(tracker).then(setTrackers);
-  };
-
-  const resetStep = () => {
-    const newCompleted = completed;
-    delete newCompleted[activeStep];
-    setCompleted(newCompleted);
-    console.warn(completed);
-    handleNext();
+    tracker.progress = {
+      uid: getCurrentUsersUid(),
+    };
+    updateTracker(tracker).then((trackers) => {
+      setTrackers(trackers);
+    });
   };
 
   const handleClick = (method) => {
@@ -143,9 +113,7 @@ export default function Tracker({ tracker, setTrackers }) {
           <Stepper nonLinear activeStep={activeStep}>
             {steps.map((label, index) => (
               <Step key={label} completed={completed[index]}>
-                <StepButton color="inherit" onClick={handleStep(index)}>
-                  {label}
-                </StepButton>
+                <StepButton color="inherit">{label}</StepButton>
               </Step>
             ))}
           </Stepper>
@@ -165,32 +133,6 @@ export default function Tracker({ tracker, setTrackers }) {
                 <Typography sx={{ mt: 2, mb: 1 }}>
                   Step {activeStep + 1}: {steps[activeStep]}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                  <Box sx={{ flex: '1 1 auto' }} />
-                  <Button onClick={handleNext} sx={{ mr: 1 }}>
-                    Next
-                  </Button>
-                  {activeStep !== steps.length
-                    && (completed[activeStep] ? (
-                      <Button onClick={resetStep}>
-                        Reset {steps[activeStep]}
-                      </Button>
-                    ) : (
-                      <Button onClick={handleComplete}>
-                        {completedSteps() === totalSteps() - 1
-                          ? 'Finish'
-                          : `Complete ${steps[activeStep]}`}
-                      </Button>
-                    ))}
-                </Box>
               </>
             )}
           </div>
@@ -302,6 +244,14 @@ Tracker.propTypes = {
     note: PropTypes.string,
     artist: PropTypes.shape({
       name: PropTypes.string,
+    }),
+    progress: PropTypes.shape({
+      0: PropTypes.bool,
+      1: PropTypes.bool,
+      2: PropTypes.bool,
+      3: PropTypes.bool,
+      4: PropTypes.bool,
+      5: PropTypes.bool,
     }),
   }).isRequired,
   setTrackers: PropTypes.func.isRequired,

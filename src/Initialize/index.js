@@ -29,7 +29,7 @@ function Initialize() {
     <div className="App">
       {user ? (
         <>
-          <UserNavbar />
+          <UserNavbar user={user} />
           <UserRoutes />
         </>
       ) : (
