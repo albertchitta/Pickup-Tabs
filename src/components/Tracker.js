@@ -21,7 +21,7 @@ const steps = ['Intro', 'Riffs', 'Verses', 'Choruses', 'Solos', 'Outro'];
 
 export default function Tracker({ tracker, setTrackers }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState({});
+  const [completed, setCompleted] = useState(tracker.progress);
   const [show, setShow] = useState(false);
   const [formInput, setFormInput] = useState(tracker);
   const history = useHistory();
@@ -30,7 +30,7 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleShow = () => setShow(true);
 
   const totalSteps = () => steps.length;
-  const completedSteps = () => Object.keys(completed).length;
+  const completedSteps = () => Object.keys(tracker.progress).length - 1;
   const isLastStep = () => activeStep === totalSteps() - 1;
   const allStepsCompleted = () => completedSteps() === totalSteps();
 
@@ -54,9 +54,9 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
-    // tracker.progress[steps[activeStep].toLowerCase()] = true;
-    // updateTracker(tracker).then(setTrackers);
+    tracker.progress[activeStep] = true;
     setCompleted(newCompleted);
+    updateTracker(tracker).then(setTrackers);
     handleNext();
     if (completedSteps() === totalSteps()) {
       tracker.status = 'Completed';
@@ -67,12 +67,15 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
+    updateTracker(tracker).then(setTrackers);
   };
 
   const resetStep = () => {
     const newCompleted = completed;
     delete newCompleted[activeStep];
+    delete tracker.progress[activeStep];
     setCompleted(newCompleted);
+    updateTracker(tracker).then(setTrackers);
     handleNext();
   };
 
@@ -295,12 +298,12 @@ Tracker.propTypes = {
       name: PropTypes.string,
     }),
     progress: PropTypes.shape({
-      intro: PropTypes.bool,
-      riffs: PropTypes.bool,
-      verses: PropTypes.bool,
-      choruses: PropTypes.bool,
-      solos: PropTypes.bool,
-      outro: PropTypes.bool,
+      0: PropTypes.bool,
+      1: PropTypes.bool,
+      2: PropTypes.bool,
+      3: PropTypes.bool,
+      4: PropTypes.bool,
+      5: PropTypes.bool,
     }),
   }).isRequired,
   setTrackers: PropTypes.func.isRequired,

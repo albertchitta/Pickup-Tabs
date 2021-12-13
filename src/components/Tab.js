@@ -31,6 +31,9 @@ export default function Tab({ tab }) {
     songId: tab.id,
     title: tab.title,
     artist: tab.artist,
+    progress: {
+      uid: getCurrentUsersUid(),
+    },
     // status: tab.status,
     // rating: tab.rating,
     // difficulty: tab.difficulty,
