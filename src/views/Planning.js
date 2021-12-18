@@ -1,11 +1,22 @@
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getCurrentUsersUid, getTrackers } from '../api/data/trackerData';
 import Tracker from '../components/Tracker';
 
-const StyledPlanning = styled.div``;
+const StyledPlanning = styled.div`
+  width: 60%;
+  justify-content: center;
+  margin: auto;
+
+  h1 {
+    text-align: center;
+    margin: 48px auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+`;
 
 export default function Planning() {
   const [trackers, setTrackers] = useState([]);
@@ -35,6 +46,7 @@ export default function Planning() {
                 />
               );
             }
+            return false;
           })
         ) : (
           <h3>No Trackers Added</h3>

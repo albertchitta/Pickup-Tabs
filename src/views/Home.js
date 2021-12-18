@@ -16,22 +16,41 @@ const StyledHome = styled.div`
 `;
 
 const StyledSearch = styled.div`
-  float: right;
-  margin-left: auto;
-  Input {
-    width: 400px;
+  justify-content: center;
+  .form-group {
+    display: flex;
+    .input {
+      margin-right: 18px;
+      width: 400px;
+
+      @media (max-width: 768px) {
+        width: 200px;
+        font-size: 12px;
+      }
+    }
+
+    Button {
+      background-color: #a99d9d;
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+    Button:hover {
+      background-color: gray;
+    }
   }
-  Button {
-    width: 80px;
-  }
+  margin: 50px auto;
 `;
 
 const StyledTabs = styled.div`
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  float: left;
+  min-width: 200px;
+  width: 60%;
   margin: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const initialState = {
@@ -68,8 +87,9 @@ export default function Home() {
     <StyledHome>
       <StyledSearch>
         <Form onSubmit={handleSubmit}>
-          <FormGroup>
+          <FormGroup className="form-group">
             <Input
+              className="input"
               type="text"
               name="tab"
               id="tab"
@@ -85,7 +105,6 @@ export default function Home() {
       <StyledTabs>
         <div className="title">
           <h1>Tabs</h1>
-          <p>A list of Tabs.</p>
         </div>
         <div className="card-container">
           {tabs.length ? (

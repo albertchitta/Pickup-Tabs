@@ -1,12 +1,9 @@
 /* eslint-disable no-alert */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
-// import Select from 'react-select';
 import {
   Form, FormGroup, Input, Label, Button,
 } from 'reactstrap';
@@ -17,11 +14,20 @@ import {
 } from '../api/data/trackerData';
 
 const StyledTab = styled.div`
+  text-align: center;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px 1px #888888;
+
   Button {
     margin-bottom: 18px;
     width: 150px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #228b22;
+  }
+  Button:hover {
+    background-color: darkGreen;
   }
 `;
 
@@ -34,10 +40,6 @@ export default function Tab({ tab }) {
     progress: {
       uid: getCurrentUsersUid(),
     },
-    // status: tab.status,
-    // rating: tab.rating,
-    // difficulty: tab.difficulty,
-    // note: tab.note,
   };
 
   const [show, setShow] = useState(false);
@@ -46,30 +48,6 @@ export default function Tab({ tab }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // const status = [
-  //   { value: formInput.status || '', label: 'Learning' },
-  //   { value: formInput.status || '', label: 'Completed' },
-  //   { value: formInput.status || '', label: 'Planning' },
-  // ];
-
-  // const rating = [
-  //   { value: formInput.rating || '', label: 'None' },
-  //   { value: formInput.rating || '', label: '1' },
-  //   { value: formInput.rating || '', label: '2' },
-  //   { value: formInput.rating || '', label: '3' },
-  //   { value: formInput.rating || '', label: '4' },
-  //   { value: formInput.rating || '', label: '5' },
-  // ];
-
-  // const difficulty = [
-  //   { value: formInput.difficulty || '', label: 'None' },
-  //   { value: formInput.difficulty || '', label: '1' },
-  //   { value: formInput.difficulty || '', label: '2' },
-  //   { value: formInput.difficulty || '', label: '3' },
-  //   { value: formInput.difficulty || '', label: '4' },
-  //   { value: formInput.difficulty || '', label: '5' },
-  // ];
 
   useEffect(() => {
     let isMounted = true;
@@ -82,6 +60,7 @@ export default function Tab({ tab }) {
           rating: tracker.rating,
           difficulty: tracker.difficulty,
           note: tracker.note,
+          videoUrl: tracker.videoUrl,
           firebaseKey: tracker.firebaseKey,
         });
       }
@@ -116,19 +95,23 @@ export default function Tab({ tab }) {
     <StyledTab>
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{tab.title}</h5>
+          <h4 className="card-title">{tab.title}</h4>
           <h6 className="card-title">{tab.artist.name}</h6>
           <a
             href={`http://www.songsterr.com/a/wa/bestMatchForQueryString?s="${tab.title}"&a="${tab.artist.name}"`}
             target="_blank"
             rel="noreferrer"
           >
-            click here
+            Click for Tabs
           </a>
         </div>
-        <button type="button" onClick={handleShow}>
-          Add to Learning
-        </button>
+        {tracker.uid ? (
+          <Button type="button" onClick={handleShow}>
+            Add to Learning
+          </Button>
+        ) : (
+          <p>Login to Track This Song</p>
+        )}
       </div>
       <Modal
         show={show}
@@ -165,42 +148,74 @@ export default function Tab({ tab }) {
                 disabled
               />
             </FormGroup>
+
+            <Label for="status">Status</Label>
+            <select
+              className="form-control form-select"
+              id="status"
+              name="status"
+              value={formInput.status || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select status
+              </option>
+              <option value="Learning">Learning</option>
+              <option value="Completed">Completed</option>
+              <option value="Planning">Planning</option>
+            </select>
+
+            <Label for="rating">Rating</Label>
+            <select
+              className="form-control form-select"
+              id="rating"
+              name="rating"
+              value={formInput.rating || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select rating
+              </option>
+              <option value="10">(10) Masterpiece</option>
+              <option value="9">(9) Great</option>
+              <option value="8">(8) Very Good</option>
+              <option value="7">(7) Good</option>
+              <option value="6">(6) Fine</option>
+              <option value="5">(5) Average</option>
+              <option value="4">(4) Bad</option>
+              <option value="3">(3) Very Bad</option>
+              <option value="2">(2) Horrible</option>
+              <option value="1">(1) Appalling</option>
+            </select>
+
+            <Label for="difficulty">Difficulty</Label>
+            <select
+              className="form-control form-select"
+              id="difficulty"
+              name="difficulty"
+              value={formInput.difficulty || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select difficulty
+              </option>
+              <option value="5">(5) Very Hard</option>
+              <option value="4">(4) Hard</option>
+              <option value="3">(3) Moderate</option>
+              <option value="2">(2) Easy</option>
+              <option value="1">(1) Very Easy</option>
+            </select>
             <FormGroup>
-              <Label for="status">Status</Label>
-              {/* <Select options={status} /> */}
+              <Label for="videoUrl">video URL</Label>
               <Input
                 type="text"
-                name="status"
-                id="status"
-                placeholder="Add status"
-                value={formInput.status || ''}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="rating">Rating</Label>
-              {/* <Select options={rating} /> */}
-              <Input
-                type="text"
-                name="rating"
-                id="rating"
-                placeholder="Add overall rating"
-                value={formInput.rating || ''}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="difficulty">Difficulty</Label>
-              {/* <Select options={difficulty} name="difficulty" id="difficulty" value={formInput.difficulty || ''} onChange={handleChange} required />
-               */}
-              <Input
-                type="text"
-                name="difficulty"
-                id="difficulty"
-                placeholder="Add difficulty rating"
-                value={formInput.difficulty || ''}
+                name="videoUrl"
+                id="videoUrl"
+                placeholder="Add a Video URL"
+                value={formInput.videoUrl || ''}
                 onChange={handleChange}
                 required
               />
@@ -239,6 +254,7 @@ Tab.propTypes = {
     rating: PropTypes.string,
     difficulty: PropTypes.string,
     note: PropTypes.string,
+    videoUrl: PropTypes.string,
     artist: PropTypes.shape({
       name: PropTypes.string,
     }),

@@ -1,9 +1,7 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -20,6 +18,65 @@ import {
   getCurrentUsersUid,
   updateTracker,
 } from '../api/data/trackerData';
+
+const StyledTracker = styled.div`
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px 1px #888888;
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+  margin: 24px auto;
+
+  .Mui-completed {
+    color: forestGreen;
+  }
+
+  .card {
+    border: 0;
+  }
+
+  .MuiStepper-root {
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      MuiStepConnector-root {
+        background-color: white;
+      }
+    }
+  }
+
+  iframe {
+    width: 100%;
+    height: 40vh;
+    border-radius: 6px;
+    margin: 15px auto;
+  }
+
+  h1 {
+    margin-top: 10px;
+  }
+
+  h6 {
+    margin-top: 5px;
+  }
+
+  .btn-secondary {
+    background-color: red;
+  }
+`;
+
+const StyledButtons = styled.div`
+  display: flex;
+  justify-content: center;
+
+  button {
+    padding: 0;
+    width: 64px;
+    margin: auto 5px;
+    color: white;
+    background-color: royalBlue;
+  }
+`;
 
 const steps = ['Intro', 'Riffs', 'Verses', 'Choruses', 'Solos', 'Outro'];
 
@@ -45,9 +102,10 @@ export default function Tracker({ tracker, setTrackers }) {
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
-    delete tracker.progress;
-    tracker.status = 'Learning';
-    tracker.progress = {
+    const aTracker = tracker;
+    delete aTracker.progress;
+    aTracker.status = 'Learning';
+    aTracker.progress = {
       uid: getCurrentUsersUid(),
     };
     updateTracker(tracker).then((trackers) => {
@@ -78,37 +136,35 @@ export default function Tracker({ tracker, setTrackers }) {
   };
 
   return (
-    <>
+    <StyledTracker>
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Title: {tracker.title}</h5>
-          <h6>Artist: {tracker.artist.name}</h6>
-          <h6>Rating: {tracker.rating}</h6>
-          <h6>Difficulty: {tracker.difficulty}</h6>
-          <h6>Notes: {tracker.note}</h6>
-          <h6>Status: {tracker.status}</h6>
+          <h5 className="card-title">
+            {tracker.artist.name} - {tracker.title}
+          </h5>
           <a
             href={`http://www.songsterr.com/a/wa/bestMatchForQueryString?s="${tracker.title}"&a="${tracker.artist.name}"`}
             target="_blank"
             rel="noreferrer"
+            className="tab-link"
           >
             Songsterr Tabs
           </a>
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={handleShow}
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => handleClick('delete')}
-          >
-            Delete
-          </button>
+          <h6>Rating: {tracker.rating}</h6>
+          <h6>Difficulty: {tracker.difficulty}</h6>
+          <h6>Notes: {tracker.note}</h6>
+          <iframe
+            src={`https://www.youtube.com/embed/${
+              tracker.videoUrl.split('=')[1]
+            }`}
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="video"
+          />
         </div>
+        <hr className="my-4" />
+        <h1>Progress</h1>
         <Box sx={{ width: '100%' }}>
           <Stepper nonLinear activeStep={activeStep}>
             {steps.map((label, index) => (
@@ -121,7 +177,7 @@ export default function Tracker({ tracker, setTrackers }) {
             {allStepsCompleted() ? (
               <>
                 <Typography sx={{ mt: 2, mb: 1 }}>
-                  All steps completed - you&apos;re finished
+                  All steps completed - you&apos;re finished!
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                   <Box sx={{ flex: '1 1 auto' }} />
@@ -137,6 +193,15 @@ export default function Tracker({ tracker, setTrackers }) {
             )}
           </div>
         </Box>
+        <hr className="my-4" />
+        <StyledButtons>
+          <button type="button" onClick={handleShow}>
+            Edit
+          </button>
+          <button type="button" onClick={() => handleClick('delete')}>
+            Delete
+          </button>
+        </StyledButtons>
       </div>
       <Modal
         show={show}
@@ -171,44 +236,81 @@ export default function Tracker({ tracker, setTrackers }) {
                 disabled
               />
             </FormGroup>
+
+            <Label for="status">Status</Label>
+            <select
+              className="form-control form-select"
+              id="status"
+              name="status"
+              value={formInput.status || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select status
+              </option>
+              <option value="Learning">Learning</option>
+              <option value="Completed">Completed</option>
+              <option value="Planning">Planning</option>
+            </select>
+
+            <Label for="rating">Rating</Label>
+            <select
+              className="form-control form-select"
+              id="rating"
+              name="rating"
+              value={formInput.rating || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select rating
+              </option>
+              <option value="10">(10) Masterpiece</option>
+              <option value="9">(9) Great</option>
+              <option value="8">(8) Very Good</option>
+              <option value="7">(7) Good</option>
+              <option value="6">(6) Fine</option>
+              <option value="5">(5) Average</option>
+              <option value="4">(4) Bad</option>
+              <option value="3">(3) Very Bad</option>
+              <option value="2">(2) Horrible</option>
+              <option value="1">(1) Appalling</option>
+            </select>
+
+            <Label for="difficulty">Difficulty</Label>
+            <select
+              className="form-control form-select"
+              id="difficulty"
+              name="difficulty"
+              value={formInput.difficulty || ''}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select difficulty
+              </option>
+              <option value="5">(5) Very Hard</option>
+              <option value="4">(4) Hard</option>
+              <option value="3">(3) Moderate</option>
+              <option value="2">(2) Easy</option>
+              <option value="1">(1) Very Easy</option>
+            </select>
+
             <FormGroup>
-              <Label for="status">Status</Label>
+              <Label for="videoUrl">Video URL</Label>
               <Input
                 type="text"
-                name="status"
-                id="status"
-                placeholder="Add status"
-                value={formInput.status || ''}
+                name="videoUrl"
+                id="videoUrl"
+                placeholder="Add a Video URL"
+                value={formInput.videoUrl || ''}
                 onChange={handleChange}
                 required
               />
             </FormGroup>
             <FormGroup>
-              <Label for="rating">Rating</Label>
-              <Input
-                type="text"
-                name="rating"
-                id="rating"
-                placeholder="Add overall rating"
-                value={formInput.rating || ''}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="difficulty">Difficulty</Label>
-              <Input
-                type="text"
-                name="difficulty"
-                id="difficulty"
-                placeholder="Add difficulty rating"
-                value={formInput.difficulty || ''}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="note">Note</Label>
+              <Label for="note">Notes</Label>
               <Input
                 type="textarea"
                 name="note"
@@ -229,7 +331,7 @@ export default function Tracker({ tracker, setTrackers }) {
           </Form>
         </Modal.Body>
       </Modal>
-    </>
+    </StyledTracker>
   );
 }
 
@@ -242,6 +344,7 @@ Tracker.propTypes = {
     rating: PropTypes.string,
     difficulty: PropTypes.string,
     note: PropTypes.string,
+    videoUrl: PropTypes.string,
     artist: PropTypes.shape({
       name: PropTypes.string,
     }),
