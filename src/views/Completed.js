@@ -1,11 +1,22 @@
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getCurrentUsersUid, getTrackers } from '../api/data/trackerData';
 import CompleteTracker from '../components/CompleteTracker';
 
-const StyledComplete = styled.div``;
+const StyledComplete = styled.div`
+  width: 60%;
+  justify-content: center;
+  margin: auto;
+
+  h1 {
+    text-align: center;
+    margin: 48px auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+`;
 
 export default function Completed() {
   const [trackers, setTrackers] = useState([]);
@@ -26,7 +37,7 @@ export default function Completed() {
       <div className="card-container">
         {trackers.length ? (
           trackers.map((tracker) => {
-            if (tracker.status === 'Completed') {
+            if (tracker.status !== 'Completed') {
               return (
                 <CompleteTracker
                   key={tracker.firebaseKey}
@@ -35,6 +46,7 @@ export default function Completed() {
                 />
               );
             }
+            return false;
           })
         ) : (
           <h3>No Trackers Added</h3>
