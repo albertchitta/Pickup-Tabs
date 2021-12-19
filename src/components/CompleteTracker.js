@@ -28,7 +28,7 @@ const StyledTracker = styled.div`
   margin: 24px auto;
 
   .Mui-completed {
-    color: forestGreen;
+    color: forestGreen !important;
   }
 
   .card {
@@ -37,12 +37,6 @@ const StyledTracker = styled.div`
 
   .MuiStepper-root {
     flex-wrap: wrap;
-
-    @media (max-width: 768px) {
-      MuiStepConnector-root {
-        background-color: white;
-      }
-    }
   }
 
   iframe {
@@ -139,7 +133,7 @@ export default function Tracker({ tracker, setTrackers }) {
     <StyledTracker>
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">
+          <h5 className="card-title" style={{ color: '#bd8633' }}>
             {tracker.artist.name} - {tracker.title}
           </h5>
           <a
@@ -164,7 +158,7 @@ export default function Tracker({ tracker, setTrackers }) {
           />
         </div>
         <hr className="my-4" />
-        <h1>Progress</h1>
+        <h1 style={{ color: '#bd8633' }}>Progress</h1>
         <Box sx={{ width: '100%' }}>
           <Stepper nonLinear activeStep={activeStep}>
             {steps.map((label, index) => (
@@ -210,11 +204,11 @@ export default function Tracker({ tracker, setTrackers }) {
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: '#2f4550' }}>Add to Tracker</Modal.Title>
+          <Modal.Title style={{ color: '#bd8633' }}>Add to Tracker</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ color: '#586f7c' }}>
           <Form onSubmit={handleSubmit}>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="title">Song Title</Label>
               <Input
                 type="text"
@@ -225,7 +219,7 @@ export default function Tracker({ tracker, setTrackers }) {
                 disabled
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="artist">Artist</Label>
               <Input
                 type="text"
@@ -245,6 +239,7 @@ export default function Tracker({ tracker, setTrackers }) {
               value={formInput.status || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select status
@@ -262,6 +257,7 @@ export default function Tracker({ tracker, setTrackers }) {
               value={formInput.rating || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select rating
@@ -286,6 +282,7 @@ export default function Tracker({ tracker, setTrackers }) {
               value={formInput.difficulty || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select difficulty
@@ -297,7 +294,7 @@ export default function Tracker({ tracker, setTrackers }) {
               <option value="1">(1) Very Easy</option>
             </select>
 
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="videoUrl">Video URL</Label>
               <Input
                 type="text"
@@ -309,7 +306,7 @@ export default function Tracker({ tracker, setTrackers }) {
                 required
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="note">Notes</Label>
               <Input
                 type="textarea"

@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getCurrentUsersUid, getTrackers } from '../api/data/trackerData';
+import ScrollToTop from '../components/ScrollToTop';
 import Tracker from '../components/Tracker';
 
 const StyledPlanning = styled.div`
-  width: 60%;
+  width: 40%;
   justify-content: center;
   margin: auto;
 
   h1 {
     text-align: center;
     margin: 48px auto;
+  }
+
+  h3 {
+    text-align: center;
   }
 
   @media (max-width: 768px) {
@@ -52,6 +57,7 @@ export default function Planning() {
           <h3>No Trackers Added</h3>
         )}
       </div>
+      <ScrollToTop />
     </StyledPlanning>
   );
 }

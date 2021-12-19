@@ -15,9 +15,9 @@ import {
 
 const StyledTab = styled.div`
   text-align: center;
-  margin-bottom: 24px;
   border-radius: 6px;
   box-shadow: 0px 0px 10px 1px #888888;
+  color: black;
 
   Button {
     margin-bottom: 18px;
@@ -95,8 +95,9 @@ export default function Tab({ tab }) {
     <StyledTab>
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">{tab.title}</h4>
-          <h6 className="card-title">{tab.artist.name}</h6>
+          <h4 className="card-title">
+            {tab.artist.name} - <span>{tab.title}</span>
+          </h4>
           <a
             href={`http://www.songsterr.com/a/wa/bestMatchForQueryString?s="${tab.title}"&a="${tab.artist.name}"`}
             target="_blank"
@@ -120,11 +121,11 @@ export default function Tab({ tab }) {
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: '#2f4550' }}>Add to Tracker</Modal.Title>
+          <Modal.Title style={{ color: '#bd8633' }}>Add to Tracker</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ color: '#586f7c' }}>
           <Form onSubmit={handleSubmit}>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="title">Song Title</Label>
               <Input
                 type="text"
@@ -136,7 +137,7 @@ export default function Tab({ tab }) {
                 disabled
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="artist">Artist</Label>
               <Input
                 type="text"
@@ -157,6 +158,7 @@ export default function Tab({ tab }) {
               value={formInput.status || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select status
@@ -174,6 +176,7 @@ export default function Tab({ tab }) {
               value={formInput.rating || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select rating
@@ -198,6 +201,7 @@ export default function Tab({ tab }) {
               value={formInput.difficulty || ''}
               onChange={handleChange}
               required
+              style={{ marginBottom: '18px' }}
             >
               <option value="" disabled>
                 Select difficulty
@@ -208,7 +212,7 @@ export default function Tab({ tab }) {
               <option value="2">(2) Easy</option>
               <option value="1">(1) Very Easy</option>
             </select>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="videoUrl">video URL</Label>
               <Input
                 type="text"
@@ -220,7 +224,7 @@ export default function Tab({ tab }) {
                 required
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ marginBottom: '18px' }}>
               <Label for="note">Note</Label>
               <Input
                 type="textarea"

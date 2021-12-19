@@ -6,17 +6,32 @@ import {
 } from 'reactstrap';
 import getTabs from '../api/data/tabsData';
 import Tab from '../components/Tab';
+import logo from '../images/logo.png';
+import ScrollToTop from '../components/ScrollToTop';
 
 const StyledHome = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 60%;
   justify-content: center;
   margin: auto;
+
+  img {
+    width: 30%;
+    border-radius: 50%;
+    justify-content: center;
+    margin: 64px auto;
+
+    @media (max-width: 768px) {
+      width: 60%;
+    }
+  }
 `;
 
 const StyledSearch = styled.div`
   justify-content: center;
+  margin: 0 auto 64px auto;
+
   .form-group {
     display: flex;
     .input {
@@ -39,14 +54,13 @@ const StyledSearch = styled.div`
       background-color: gray;
     }
   }
-  margin: 50px auto;
 `;
 
 const StyledTabs = styled.div`
   float: left;
   min-width: 200px;
   width: 60%;
-  margin: auto;
+  margin: auto auto 64px auto;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -85,6 +99,7 @@ export default function Home() {
 
   return (
     <StyledHome>
+      <img src={logo} alt="Pickup Tabs" />
       <StyledSearch>
         <Form onSubmit={handleSubmit}>
           <FormGroup className="form-group">
@@ -103,17 +118,15 @@ export default function Home() {
         </Form>
       </StyledSearch>
       <StyledTabs>
-        <div className="title">
-          <h1>Tabs</h1>
-        </div>
         <div className="card-container">
           {tabs.length ? (
             tabs.map((tab) => <Tab key={tab.id} tab={tab} setTabs={setTabs} />)
           ) : (
-            <h3>Search for Tabs</h3>
+            <h3> </h3>
           )}
         </div>
       </StyledTabs>
+      <ScrollToTop />
     </StyledHome>
   );
 }
