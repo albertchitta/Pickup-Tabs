@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import PublicNavbar from '../components/PublicNavbar';
 import PublicRoutes from '../routes/PublicRoutes';
 import UserNavbar from '../components/UserNavbar';
 import UserRoutes from '../routes/UserRoutes';
+import Footer from '../components/Footer';
+
+const StyledContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 2.5rem;
+`;
 
 function Initialize() {
   const [user, setUser] = useState(null);
@@ -26,7 +34,7 @@ function Initialize() {
   }, []);
 
   return (
-    <div className="App">
+    <StyledContainer>
       {user ? (
         <>
           <UserNavbar user={user} />
@@ -38,7 +46,8 @@ function Initialize() {
           <PublicRoutes />
         </>
       )}
-    </div>
+      <Footer />
+    </StyledContainer>
   );
 }
 

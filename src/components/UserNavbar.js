@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,6 +15,9 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { signOutUser } from '../api/auth';
+// import logo from '../images/logo.png';
+
+const StyledNavbar = styled.div``;
 
 const settings = ['Logout'];
 
@@ -38,7 +42,7 @@ const ResponsiveAppBar = ({ user }) => {
   };
 
   return (
-    <>
+    <StyledNavbar>
       <AppBar position="static" style={{ backgroundColor: '#bd8633' }}>
         <Container maxWidth="l">
           <Toolbar disableGutters>
@@ -55,6 +59,7 @@ const ResponsiveAppBar = ({ user }) => {
               style={{ marginRight: 32 }}
               component={Link}
               to="/"
+              className="home"
             >
               Pickup Tabs
             </Typography>
@@ -224,7 +229,7 @@ const ResponsiveAppBar = ({ user }) => {
           </Toolbar>
         </Container>
       </AppBar>
-    </>
+    </StyledNavbar>
   );
 };
 export default ResponsiveAppBar;
