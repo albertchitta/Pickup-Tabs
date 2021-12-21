@@ -17,7 +17,7 @@ const StyledHome = styled.div`
   margin: auto;
 
   img {
-    width: 30%;
+    width: 20%;
     border-radius: 50%;
     justify-content: center;
     margin: 64px auto;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const dbUrl = 'http://www.songsterr.com/a/ra/';
+const dbUrl = 'https://www.songsterr.com/a/ra/';
 
 const getTabs = (input) => new Promise((resolve, reject) => {
   axios

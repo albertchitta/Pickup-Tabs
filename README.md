@@ -1,82 +1,110 @@
-# React Template
-[![Netlify Status](https://api.netlify.com/api/v1/badges/339c4ae9-fc7f-41b4-9b49-2dab0a20eaba/deploy-status)](https://app.netlify.com/sites/react-template-21/deploys)
+# Pickup Tabs  [![Netlify Status](https://api.netlify.com/api/v1/badges/a3a30752-2633-4e30-893b-f12652645a17/deploy-status)](https://app.netlify.com/sites/pickuptabs/deploys)
+<!-- update the netlify badge above with your own badge that you can find at netlify under settings/general#status-badges -->
 
-[See Live Demo of this Template](https://react-template-21.netlify.app/)
+![Home]()
+Do you struggle reading sheet music? Are you slowly losing motivation? Keep track of your progress, and learn your favorite rock songs with Pickup Tabs!
 
-This template includes all the dependencies and set up needed for you to work within defined code standards and structure to get you up and running quickly.
+[View App](https://pickuptabs.netlify.app/)
 
-## Topics
-- [Get Started](#get-started)
-- [Starting the Project](#starting-the-project)
-- [Other important tidbits](#other-important-tidbits)
-    - [React Dev Tools](#react-dev-tools)
-    - [Using axios](#using-axios)
-    - [Deploying on Netlify](#deploying-on-netlify)
-___
-
-## Get Started
-### Use Template
-#### 1. To get started, click the GREEN "Use this Template" button at the top of the repo
-![Use this Template](./documentation/usetemplate.png)
-
-#### 2. Make sure YOUR github account is selected in the dropdown and name your project
-![Create Project](./documentation/createproject.png)
-
-3. Clone your new repo to your local machine
-4. Go to the **NEXT** section
-
-## Starting the Project
-1. Open the `package.json` file and change the `name` property to the name of your application, and `author` to  your name
-1. Open the `/public/index.html` file and change the `title` attribute to the name of your application
-1. Rename the `.env.local.sample` file to `.env.local` file. The final file name should be `.env.local`
-1. From your command line, be in the root directory and run `npm install` OR `npm i` for short
-1. From your command line, be in the root directory and run `npx husky install`
-1. To start your application, run `npm start`
-
-### If you see this, you are set to go!
-![LIT](./documentation/lit-screen.png)
-
-**NOTES:** 
-- Changes you make to the project will make the browser reload on save...no more hard refresh unless something goes wrong.
-
-## Other Important Tidbits
-### React Dev Tools
-From this time forward, you will be expected to have a clean console in order for your assignments to be approved. Use [React Developer Tools Chrome Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) to help with debugging.
-### Including Images with React
-If you have a folder of local images that you want to load into your code things get a little strange with webpack.  Remember the only way webpack knows about assets is if they are imported into your javascript files.  Even our CSS is not added until those files are imported into our javascript files.  Below is some sample code for how to load a local image file into your project
-
-```js
-import cat from './assets/cat.jpg';
-
-<>
-  <img src=${cat} alt="picture of a cat"/>
-</>
-
+## Get Started <!-- OPTIONAL, but doesn't hurt -->
 ```
-### Using Axios
-> For every file you will need to make an API request in, you will need to import Axios
-```js
-import axios from 'axios';
+$ git clone git@github.com:albertchitta/Pickup-Tabs.git
+$ cd Pickup-Tabs
+```
+## About the User <!-- This is a scaled down user persona -->
+- Beginner guitarists can use this website to track the learning progress of their favorite songs.
+- The user will be able to search for artists or songs that they can add to their tracker.
 
-const examplePromise = () => {
-  axios.get('http://localhost:3001/example')
-    .then((data) => {
-      console.warn(data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-});
+## Features <!-- List your app features using bullets! Do NOT use a paragraph. No one will read that! -->
+- Authentication - Users can login and logout of the application using Google.
+- Users can search for artists or songs. Users will have to login to create progress trackers.
+- Users will have a progress bar that they can use to mark each milestone (intro, riffs, verses, choruses, solos, outros).
+- Users can sort the trackers between Learning, Completed, and Planning.
+- React and Reactstrap for Modals.
+- Styled Components.
+- Responsive and mobile-friendly.
+
+## Video Walkthrough of Pickup Tabs <!-- A loom link is sufficient -->
+
+
+## Relevant Links <!-- Link to all the things that are required outside of the ones that have their own section -->
+- [Check out the deployed site](https://pickuptabs.netlify.app/)
+- [Wireframes](https://docs.google.com/presentation/d/1q_uiTUlDztvt_vHUVExLs2Lv8HXXmN3VFiuodu7GdL4/edit?usp=sharing)
+- [ERD](https://dbdiagram.io/d/61a571178c901501c0d8509f)
+- [Project Board](https://github.com/albertchitta/Pickup-Tabs/projects/1)
+- [Songsterr API](https://www.songsterr.com/a/wa/api)
+
+## Code Snippet <!-- OPTIONAL, but doesn't hurt -->
+This code block shows the progress tracker and how each milestone is configured to be completed or reset.
+```
+<Box sx={{ width: '100%' }}>
+  <Stepper nonLinear activeStep={activeStep}>
+    {steps.map((label, index) => (
+      <Step key={label} completed={completed[index]}>
+        <StepButton color="inherit" onClick={handleStep(index)}>
+          {label}
+        </StepButton>
+      </Step>
+    ))}
+  </Stepper>
+  <div>
+    {allStepsCompleted() ? (
+      <>
+        <Typography sx={{ mt: 2, mb: 1 }}>
+          All steps completed - you&apos;re finished
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box sx={{ flex: '1 1 auto' }} />
+          <Button onClick={handleReset}>Reset</Button>
+        </Box>
+      </>
+    ) : (
+      <>
+        <Typography sx={{ mt: 2, mb: 1 }}>
+          Step {activeStep + 1}: {steps[activeStep]}
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Button
+            color="inherit"
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            sx={{ mr: 1 }}
+            className="btn-back"
+          >
+            Back
+          </Button>
+          <Button
+            onClick={handleNext}
+            sx={{ mr: 1 }}
+            className="btn-next"
+          >
+            Next
+          </Button>
+          <Box sx={{ flex: '1 1 auto' }} />
+          {activeStep !== steps.length
+            && (completed[activeStep] ? (
+              <Button className="reset-button" onClick={resetStep}>
+                Reset {steps[activeStep]}
+              </Button>
+            ) : (
+              <Button
+                className="complete-button"
+                onClick={handleComplete}
+              >
+                {completedSteps() === totalSteps() - 1
+                  ? 'Finish'
+                  : `Complete ${steps[activeStep]}`}
+              </Button>
+            ))}
+        </Box>
+      </>
+    )}
+  </div>
+</Box>
 ```
 
-### Deploying on Netlify
+## Project Screenshots <!-- These can be inside of your project. Look at the repos from class and see how the images are included in the readme -->
 
-- Build Command: `yarn build`
-- Publish directory: `build`
-- **Add Environmental Variables (NOT REQUIRED for Apps that do not use API Keys, etc)**
-    - Any Enviromental variables you are using in your `.env.local` file should be added to Netlify. 
-        - Go to Site settings > Build & deploy > Environment > Environment variables and the keys and values there.
-- **Update Firebase URL Settings**
-    - In Firebase under Authentication select sign in methods, scroll to Authorized domains. Add your Netlify URL.
-# Your own learning
-If you are interested in setting up your own project for things outside of class, you can run the command to start a React project `npx create-react-app {APP_NAME}` and setup all the files and structures from scratch.
+
+## Contributors
+- [Albert Chittaphong](https://github.com/albertchitta)
