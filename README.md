@@ -1,8 +1,8 @@
 # Pickup Tabs  [![Netlify Status](https://api.netlify.com/api/v1/badges/a3a30752-2633-4e30-893b-f12652645a17/deploy-status)](https://app.netlify.com/sites/pickuptabs/deploys)
 <!-- update the netlify badge above with your own badge that you can find at netlify under settings/general#status-badges -->
 
-![Home]()
-Do you struggle reading sheet music? Are you slowly losing motivation? Keep track of your progress, and learn your favorite rock songs with Pickup Tabs!
+![Home](https://user-images.githubusercontent.com/83558122/146853729-8b3181c9-a867-44a0-b0db-85daba1c3f64.PNG)
+Do you want to play the guitar but struggle reading sheet music? Are you slowly losing motivation? Keep track of your progress, and learn your favorite songs with Pickup Tabs!
 
 [View App](https://pickuptabs.netlify.app/)
 
@@ -25,7 +25,7 @@ $ cd Pickup-Tabs
 - Responsive and mobile-friendly.
 
 ## Video Walkthrough of Pickup Tabs <!-- A loom link is sufficient -->
-
+https://www.loom.com/share/794701c36b5a4d8b8563b448bbfcf041
 
 ## Relevant Links <!-- Link to all the things that are required outside of the ones that have their own section -->
 - [Check out the deployed site](https://pickuptabs.netlify.app/)
@@ -104,7 +104,10 @@ This code block shows the progress tracker and how each milestone is configured 
 ```
 
 ## Project Screenshots <!-- These can be inside of your project. Look at the repos from class and see how the images are included in the readme -->
-
+![Home Search](https://user-images.githubusercontent.com/83558122/146853733-5bcffdb9-78e9-4d7d-a760-159a3febf444.PNG)
+![Currently Learning](https://user-images.githubusercontent.com/83558122/146853735-0debbc91-ebab-410d-b26a-2a0dad8bc1a8.PNG)
+![Completed](https://user-images.githubusercontent.com/83558122/146853739-f54cc992-6dc4-40e8-8c20-87222cdd329d.PNG)
+![Planning to Learn](https://user-images.githubusercontent.com/83558122/146853741-151725ca-93d3-4415-9f9e-49d5540c1fba.PNG)
 
 ## Contributors
 - [Albert Chittaphong](https://github.com/albertchitta)
