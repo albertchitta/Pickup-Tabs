@@ -213,7 +213,7 @@ export default function Tab({ tab }) {
               <option value="1">(1) Very Easy</option>
             </select>
             <FormGroup style={{ marginBottom: '18px' }}>
-              <Label for="videoUrl">video URL</Label>
+              <Label for="videoUrl">Video URL</Label>
               <Input
                 type="text"
                 name="videoUrl"
